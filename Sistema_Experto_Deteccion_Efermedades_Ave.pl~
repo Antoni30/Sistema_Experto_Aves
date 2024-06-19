@@ -1,0 +1,509 @@
+:- use_module(library(pce)).
+:- pce_image_directory('./datoImgs').
+:- use_module(library(pce_style_item)).
+:- dynamic color/2.
+
+
+
+resource(inf1,image,image('sindrome_de_mortalidad_por_pico_de_hipoglicemia.jpg')).
+
+mostrar_imagen(Pantalla, Imagen) :- new(Figura, figure),
+                                     new(Bitmap, bitmap(resource(Imagen),@on)),
+                                     send(Bitmap, name, 1),
+                                     send(Figura, display, Bitmap),
+                                     send(Figura, status, 1),
+                                     send(Pantalla, display,Figura,point(100,80)).
+
+
+%Tipo Enfermedad
+tipo_de_enfermedad(bacteriana).
+tipo_de_enfermedad(virales).
+tipo_de_enfermedad(neoplásicas).
+tipo_de_enfermedad(parasitarias).
+tipo_de_enfermedad(micosis).
+tipo_de_enfermedad(micotoxicosis).
+tipo_de_enfermedad(carenciales).
+tipo_de_enfermedad(otros).
+
+%aves
+ave(pollo).
+ave(paloma).
+ave(pato).
+ave(ganso).
+ave(cacatua).
+ave(canario).
+ave(periquito).
+ave(pavo_real).
+ave(pavo).
+ave(flamenco).
+ave(cisne).
+ave(tucan).
+ave(loro).
+
+%tipo ave
+aveesde(pollo,corral).
+aveesde(paloma,corral).
+aveesde(pavo,corral).
+aveesde(pavo,silvestre).
+aveesde(paloma,silvestre).
+aveesde(pato,corral).
+aveesde(pato,silvestre).
+aveesde(ganso,corral).
+aveesde(ganso,silvestre).
+aveesde(cacatua,ornamental).
+aveesde(canario,ornamental).
+aveesde(periquito,ornamental).
+aveesde(pavo_real,ornamental).
+aveesde(flamenco,ornamental).
+aveesde(cisne,ornamental).
+aveesde(tucan,ornamental).
+aveesde(loro,ornamental).
+
+
+
+
+
+%sintomas
+
+sintomade(diarrea,escherichia_coli).
+sintomade(deshidratación,escherichia_coli).
+sintomade(perdida_peso,escherichia_coli).
+sintomade(ombligo_hinchado,onfatilitis).
+sintomade(secrecion_purulenta,onfatilitis).
+sintomade(letargo,onfatilitis).
+sintomade(perdida_de_apetito,onfatilitis).
+sintomade(abdomen_distendido,salpingitis).
+sintomade(reduccion_produccion_huevos,salpingitis).
+sintomade(huevo_cascara_anormal,salpingitis).
+sintomade(abdomen_sensible,peritonitis).
+sintomade(letargo,peritonitis).
+sintomade(perdida_de_apetito,peritonitis).
+sintomade(inflamacion_ovarios,ooforitis).
+sintomade(reduccion_produccion_huevos,ooforitis).
+sintomade(hichazon_piel,celulitis).
+sintomade(enrojecimiento_piel,celulitis).
+sintomade(diarrea,enterocolitis).
+sintomade(deshidratacion,enterocolitis).
+sintomade(perdida_de_apetito,enterocolitis).
+sintomade(perdida_peso,enterocolitis).
+sintomade(septicemia,e_coli).
+sintomade(aerosaculitis,e_coli).
+sintomade(pericarditis,e_coli).
+sintomade(perihepatitis,e_coli).
+sintomade(diarrea,salmonelosis).
+sintomade(deshidratacion,salmonelosis).
+sintomade(plumas_erizadas,salmonelosis).
+sintomade(diarrea,salmonelosis).
+sintomade(diarrea_blanca,pullorosis).
+sintomade(cloaca_sucia,pullorosis).
+sintomade(letargo,pullorosis).
+sintomade(diarrea_amarrillenta,tifoidea).
+sintomade(debilidad,tifoidea).
+sintomade(reduccion_produccion_huevos,tifoidea).
+sintomade(diarrea,infeccion_paratifica).
+sintomade(deshidratacion,infeccion_paratifica).
+sintomade(letargo,infeccion_paratifica).
+sintomade(dificultad_respiratoria,pseudomona_aeruginosa).
+sintomade(secrecion_nasal,pseudomona_aeruginosa).
+sintomade(cresta_hinchada,colera_aviar).
+sintomade(diarrea_blanca,colera_aviar).
+sintomade(anorexia,colera_aviar).
+sintomade(plumas_erizadas,colera_aviar).
+sintomade(dificultad_respitatoria,riemerella_anatipestifer).
+sintomade(secrecion_nasal,riemerella_anatipestifer).
+sintomade(articulaciones_hinchadas,staphylococcus).
+sintomade(cojera,staphylococcus).
+sintomade(abscesos,staphylococcus).
+sintomade(articulaciones_hinchadas,streptococcus).
+sintomade(letargo,streptococcus).
+sintomade(perdida_peso,streptococcus).
+sintomade(dificultad_respiratoria,mycoplasma_gallisepticum).
+sintomade(secrecion_nasal,mycoplasma_gallisepticum).
+sintomade(senos_periorbitales_hinchados,mycoplasma_gallisepticum).
+sintomade(cojera,mycoplasma_synoviae).
+sintomade(articulaciones_hinchadas,mycoplasma_synoviae).
+sintomade(diarrea,enteritis_necrótica).
+sintomade(deshidratacion,enteritis_necrótica).
+sintomade(plumas_erizadas,enteritis_necrótica).
+sintomade(perdida_de_apetito,enteritis_necrótica).
+sintomade(ictericia,colangiohepatitis).
+sintomade(perdida_peso,colangiohepatitis).
+sintomade(letargo,colangiohepatitis).
+sintomade(perdida_peso,enteritis_ulcerativa).
+sintomade(diarrea,enteritis_ulcerativa).
+sintomade(lesiones_ulcerativas,enteritis_ulcerativa).
+sintomade(plumas_erizadas,enteritis_ulcerativa).
+sintomade(necrosis,gastritis_necrotica).
+sintomade(diarrea,gastritis_necrotica).
+sintomade(depresion,gastritis_necrotica).
+sintomade(lesiones_en_piel,dermatitis_gangrenosa).
+sintomade(necrosis,dermatitis_gangrenosa).
+sintomade(emacinacion,dermatitis_gangrenosa).
+sintomade(paralisis,botulismo).
+sintomade(debilidad_muscular,botulismo).
+sintomade(anemia,espiroquetosis).
+sintomade(letargo,espiroquetosis).
+sintomade(heces_verdes,espiroquetosis).
+sintomade(conjuntivitis,clamidiosis).
+sintomade(secrecion_nasal,clamidiosis).
+sintomade(dificultad_respiratoria,clamidiosis).
+sintomade(secrecion_nasal,coriza_infecciosa).
+sintomade(estornudos,coriza_infecciosa).
+sintomade(inflamacion_nasal,coriza_infecciosa).
+sintomade(perdida_peso,tuberculosis_aviar).
+sintomade(caquexia,tuberculosis_aviar).
+sintomade(diarrea,tuberculosis_aviar).
+sintomade(palidez,tuberculosis_aviar).
+sintomade(ictericia,hepatitis_viral).
+sintomade(plumas_erizadas,hepatitis_viral).
+sintomade(letargo,hepatitis_viral).
+sintomade(diarrea_sanguinolenta,enteritis_hemorrágica).
+sintomade(depresion,enteritis_hemorrágica).
+sintomade(perdida_de_apetito,enteritis_hemorrágica).
+sintomade(reduccion_produccion_huevos,sinndrome_caida_postura).
+sintomade(prolapso,sinndrome_caida_postura).
+sintomade(enteritis,adenovirus).
+sintomade(hepatitis,adenovirus).
+sintomade(neumonia,adenovirus).
+sintomade(depresion,gumboro).
+sintomade(diarrea_blanca,gumboro).
+sintomade(cloaca_sucia,gumboro).
+sintomade(plumas_erizadas,gumboro).
+sintomade(letargo,gumboro).
+sintomade(tos,bronquitis_infecciosa).
+sintomade(estornudo,bronquitis_infecciosa).
+sintomade(estertores,bronquitis_infecciosa).
+sintomade(dificultad_respiratoria,laringotraqueitis).
+sintomade(tos_con_sangre,laringotraqueitis).
+sintomade(secrecion_nasal,laringotraqueitis).
+sintomade(inflamacion_de_cabeza,shs).
+sintomade(conjuntivitis,shs).
+sintomade(dificultad_respiratoria,shs).
+sintomade(temblor_cabeza,encefalomielitis).
+sintomade(paralisis,encefalomielitis).
+sintomade(dificultad_respiratoria,newcastle).
+sintomade(paralisis,newcastle).
+sintomade(tos,newcastle).
+sintomade(diarrea,newcastle).
+sintomade(lesiones_en_piel,viruela_aviar).
+sintomade(reduccion_produccion_huevos,viruela_aviar).
+sintomade(dificultad_respiratoria,viruela_aviar).
+sintomade(deshidratacion,nefritis).
+sintomade(lesiones_renales,nefritis).
+sintomade(deshidratacion,nefritis).
+sintomade(diarrea,nefritis).
+sintomade(diarrea,pems).
+sintomade(deshidratacion,pems).
+sintomade(anorexia,pems).
+sintomade(perdida_peso,proventriculitis).
+sintomade(ictericia,hepatitis_esplenomegalia).
+sintomade(depresion,hepatitis_esplenomegalia).
+sintomade(plumas_erizadas,hepatitis_esplenomegalia).
+
+
+
+
+
+
+
+
+%otros
+sintomade(muerte_subita,sindrome_de_mortalidad_por_pico_de_hipoglicemia).
+sintomade(convulsiones,sindrome_de_mortalidad_por_pico_de_hipoglicemia).
+sintomade(enanismo,sindrome_de_mortalidad_por_pico_de_hipoglicemia).
+sintomade(palidez_cresta,sindrome_de_mortalidad_por_pico_de_hipoglicemia).
+sintomade(palidez_barbilla,sindrome_de_mortalidad_por_pico_de_hipoglicemia).
+sintomade(muerte_subita,sindrome_de_hipertencion_pulmonar).
+sintomade(respiracion_rapida,sindrome_de_hipertencion_pulmonar).
+sintomade(respiracion_esforzada,sindrome_de_hipertencion_pulmonar).
+sintomade(jadeos,sindrome_de_hipertencion_pulmonar).
+sintomade(ombligo_hinchado,sindrome_de_hipertencion_pulmonar).
+sintomade(letargo,sindrome_de_hipertencion_pulmonar).
+sintomade(debilidad,sindrome_de_hipertencion_pulmonar).
+sintomade(piel_azul,sindrome_de_hipertencion_pulmonar).
+sintomade(crecimiento_retardado,sindrome_de_hipertencion_pulmonar).
+sintomade(plumaje_desaliñado,sindrome_de_hipertencion_pulmonar).
+sintomade(cojera,necrosis_de_la_cabeza_femoral).
+sintomade(dificultad_para_caminar,necrosis_de_la_cabeza_femoral).
+sintomade(inactividad,necrosis_de_la_cabeza_femoral).
+sintomade(perdida_peso,necrosis_de_la_cabeza_femoral).
+sintomade(crecimiento_retardado,necrosis_de_la_cabeza_femoral).
+sintomade(postura_anormal,necrosis_de_la_cabeza_femoral).
+sintomade(hinchazon_de_articulaciones,necrosis_de_la_cabeza_femoral).
+sintomade(perdida_peso,amiloidosis).
+sintomade(letargo,amiloidosis).
+sintomade(debilidad,amiloidosis).
+sintomade(plumaje_desaliñado, amiloidosis).
+sintomade(respiracion_esforzada,amiloidosis).
+sintomade(diarrea,amiloidosis).
+sintomade(respiracion_esforzada,amiloidosis).
+sintomade(huevos_anormales,amiloidosis).
+sintomade(cojera,pododermatitis_plantar).
+sintomade(inflamacion_patas ,pododermatitis_plantar).
+sintomade(lesion_plantas_pies,pododermatitis_plantar).
+sintomade(postura_anormal,pododermatitis_plantar).
+sintomade(letargo,pododermatitis_plantar).
+sintomade(perdida_apetito,pododermatitis_plantar).
+sintomade(plumas_rotas ,canibalismo).
+sintomade(heridas ,canibalismo).
+sintomade(sangrados,canibalismo).
+sintomade(plumas_rotas ,canibalismo).
+sintomade(comportamiento_agresivo,canibalismo).
+sintomade(letargo,gota_visceral).
+sintomade(perdida_apetito, gota_viscera).
+sintomade(diarrea,gota_viscera).
+sintomade(respiracion_esforzada,gota_viscera).
+sintomade(deshidratacion,gota_viscera).
+sintomade(aumento_orina,gota_visceral).
+sintomade(hinchazon_de_articulaciones,gota_articular).
+sintomade(cojera,gota_articular).
+sintomade(deformacion_articulacion,gota_articular).
+sintomade(postura_anormal,gota_articular).
+sintomade(engrosamiento_pico,hiperqueratosis).
+sintomade(engrosamiento_patas,hiperqueratosis).
+sintomade(lesiones_piel,hiperqueratosis).
+sintomade(descamacion,hiperqueratosis).
+sintomade(fisuras_pico,hiperqueratosis).
+sintomade(irritacion,hiperqueratosis).
+sintomade(infeccion_pico_patas,hiperqueratosis).
+sintomade(respiracion_esforzada,cardiomiopatia_dilatada).
+sintomade(letargo,cardiomiopatia_dilatada).
+sintomade(debilidad,cardiomiopatia_dilatada).
+sintomade(perdida_peso,cardiomiopatia_dilatada).
+sintomade(edema,cardiomiopatia_dilatada).
+sintomade(cianosis,cardiomiopatia_dilatada).
+sintomade(tos,cardiomiopatia_dilatada).
+sintomade(palpitaciones,cardiomiopatia_dilatada).
+sintomade(respiracion_esforzada,intoxicacion_selenio).
+sintomade(diarrea,intoxicacion_selenio).
+sintomade(perdida_apetito,intoxicacion_selenio).
+sintomade(paralisis,intoxicacion_selenio).
+sintomade(plumaje_desaliñado,intoxicacion_selenio).
+sintomade(piel_amarillenta,intoxicacion_selenio).
+sintomade(muerte_subita,intoxicacion_selenio).
+
+
+%kevin
+sintomade(lesiones_linfomatosas, marek_agudas).
+sintomade(ovarios_coliflor, marek_agudas).
+sintomade(asimetria_testiculos, marek_agudas).
+sintomade(crecimiento_pancreas, marek_agudas).
+sintomade(proventriculos_agrandados, marek_agudas).
+sintomade(tumores_musculos_pectorales, marek_agudas).
+sintomade(paralisis_extremidades, marek_clasica).
+sintomade(despigmentacion, marek_clasica).
+sintomade(pupila_deformada, marek_clasica).
+sintomade(ceguera, marek_clasica).
+sintomade(engrosamiento_nervios, marek_clasica).
+sintomade(proliferacion_celulas_linfoides, marek_clasica).
+sintomade(leucosis_linfoide, neoplasias_hematopoyetico).
+sintomade(eritroblastosis, neoplasias_hematopoyetico).
+sintomade(mieloblastosis, neoplasias_hematopoyetico).
+sintomade(mielocitomatosis, neoplasias_hematopoyetico).
+sintomade(tumores_endoteliales, neoplasias_no_hematopoyetico).
+sintomade(osteopetrosis, neoplasias_no_hematopoyetico).
+sintomade(tumores_tejido_conectivo, neoplasias_no_hematopoyetico).
+sintomade(tumores_epiteliales, neoplasias_no_hematopoyetico).
+sintomade(tumores_mixtos, neoplasias_no_hematopoyetico).
+sintomade(sindrome_enanismo, neoplasias_agudas_celulas_reticulares).
+sintomade(neoplasias_cronicas, neoplasias_agudas_celulas_reticulares).
+sintomade(comienzo_gradual, leucosis_linfoide).
+sintomade(mortalidad_baja, leucosis_linfoide).
+sintomade(crecimientos_neoplasicos_visceras, leucosis_linfoide).
+sintomade(palidez_cresta, leucosis_linfoide).
+sintomade(hinchazon_abdomen, leucosis_linfoide).
+sintomade(neoplasicos_higado_bazo_rinones, leucosis_linfoide).
+sintomade(ruptura_neoplasicos, leucosis_linfoide).
+sintomade(proliferacion_granulocitos, mielocitomatosis).
+sintomade(sin_leucemia, mielocitomatosis).
+sintomade(tumores_huesos, mielocitomatosis).
+sintomade(higado_agrandado, mielocitomatosis).
+sintomade(proliferaciones_intravasculares, eritroblastosis).
+sintomade(leucemia, eritroblastosis).
+sintomade(anemia_severa, eritroblastosis).
+sintomade(higado_riñones_agrandados, eritroblastosis).
+sintomade(bazo_agrandado, eritroblastosis).
+sintomade(acumulacion_eritroblastos, eritroblastosis).
+sintomade(engrosamiento_periostio, osteopetrosis).
+sintomade(huesos_afectados, osteopetrosis).
+sintomade(leucosis_linfoide, osteopetrosis).
+sintomade(tracto_intestinal_reproductivo, adenocarcinomatosis).
+sintomade(invasion_peritoneo, adenocarcinomatosis).
+sintomade(nodulos_engrosados, adenocarcinomatosis).
+sintomade(tumores_quisticos, adenocarcinomatosis).
+sintomade(nodulos_tumores, leiomioma_mesosalpinx).
+sintomade(nodulos_vascularizados, leiomioma_mesosalpinx).
+sintomade(lesiones_piel, carcinoma_dermico_celulas_escamosas).
+sintomade(costras_tarsometatarsal, carcinoma_dermico_celulas_escamosas).
+sintomade(corneas_amarillentas, carcinoma_dermico_celulas_escamosas).
+sintomade(carcinomas_plantar, carcinoma_dermico_celulas_escamosas).
+sintomade(desperdimiento_piel, carcinoma_dermico_celulas_escamosas).
+sintomade(hemorragias, carcinoma_dermico_celulas_escamosas).
+sintomade(enteritis, coccidiosis).
+sintomade(diarrea_sanguinolenta, coccidiosis).
+sintomade(heces_sangre, coccidiosis).
+sintomade(plumas_erizadas, coccidiosis).
+sintomade(somnolencia, coccidiosis).
+sintomade(anemia, coccidiosis).
+sintomade(cloaca_manchada_sangre, coccidiosis).
+sintomade(deshidratacion, coccidiosis).
+sintomade(tiflitis_hemorragica, coccidiosis).
+sintomade(ciegos_sangre, coccidiosis).
+sintomade(heces_amarillas, histomonosis).
+sintomade(depresion, histomonosis).
+sintomade(cabeza_negra, histomonosis).
+sintomade(agrandamiento_ciegos, histomonosis).
+sintomade(tiflitis, histomonosis).
+sintomade(necrosis_hepatica, histomonosis).
+sintomade(placas_amarillas, tricomoniasis).
+sintomade(lesiones_boca, tricomoniasis).
+sintomade(lesiones_faringe, tricomoniasis).
+sintomade(esofago_obstruido, tricomoniasis).
+sintomade(emaciacion, ascaridiosis).
+sintomade(anemia, ascaridiosis).
+sintomade(hemorragias_intestinales, ascaridiosis).
+sintomade(enteritis_hemorragica, ascaridiosis).
+sintomade(obstruccion_intestinal, ascaridiosis).
+sintomade(vector_histomonas, heterakidosis).
+sintomade(histomonosis, heterakidosis).
+sintomade(diarrea, raillietinosis).
+sintomade(emaciacion, raillietinosis).
+sintomade(anemia, raillietinosis).
+sintomade(hemorragias_intestinales, raillietinosis).
+sintomade(enteritis_hemorragica, raillietinosis).
+sintomade(costras_piernas, knemidokoptosis).
+sintomade(costras_pico, knemidokoptosis).
+sintomade(costras_cloaca, knemidokoptosis).
+sintomade(costras_ojos, knemidokoptosis).
+sintomade(vector_patogenos, alphitobius_diaperinus).
+sintomade(obstruccion_intestinal , alphitobius_diaperinus).
+sintomade(mortalidad_hipoglicemia, alphitobius_diaperinus).
+sintomade(lesiones_miceliales, aspergillosis).
+sintomade(placas_pseudomembranosas, aspergillosis).
+sintomade(lesiones_necroticas, aspergillosis).
+sintomade(lesiones_lechosas, candidiasis).
+sintomade(proliferacion_levaduras, candidiasis).
+sintomade(lesiones_mucosa_oral, candidiasis).
+sintomade(esofago_obstruido, candidiasis).
+sintomade(lesiones_tubulo_hierro, aflatoxicosis).
+sintomade(daño_higado, aflatoxicosis).
+sintomade(hemorragia_higado, aflatoxicosis).
+sintomade(lesiones_necrosantes, fusariotoxicosis).
+sintomade(muerte_subita, fusariotoxicosis).
+sintomade(daño_higado, fusariotoxicosis).
+sintomade(hemorragia_higado, fusariotoxicosis).
+sintomade(perdida_peso, deficiencia_vitamina_a).
+sintomade(deformidad_huesos, deficiencia_vitamina_a).
+sintomade(perdida_apetito, deficiencia_vitamina_a).
+sintomade(lesion_cavidad_oral, deficiencia_vitamina_a).
+sintomade(paralisis_muscular, deficiencia_vitamina_b1).
+sintomade(descoordinacion, deficiencia_vitamina_b1).
+sintomade(crecimiento_reducido, deficiencia_vitamina_b2).
+sintomade(deformidad_huesos, deficiencia_vitamina_b2).
+sintomade(encefalomalacia, deficiencia_vitamina_e).
+sintomade(hemorragia_muscular, deficiencia_vitamina_e).
+sintomade(debilidad_muscular, deficiencia_vitamina_e).
+sintomade(hemorragia_abdomen, higado_graso_hemorragico).
+sintomade(hígado_graso, higado_graso_hemorragico).
+sintomade(mortalidad, higado_graso_hemorragico).
+sintomade(debilidad_muscular, raquitismo).
+sintomade(deformidad_huesos, raquitismo).
+sintomade(crecimiento_reducido, raquitismo).
+
+
+
+% Enfermedad
+enfermedadde(enteritis_ulcerativa,codorniz).
+enfermedadde(gastritis_necrotica,pavo).
+enfermedadde(gastritis_necrotica,pollo).
+enfermedadde(colera_aviar,pollo).
+enfermedadde(colera_aviar,pavo).
+enfermedadde(colera_aviar,pato).
+enfermedadde(riemerella_anatipestifer,pato).
+enfermedadde(riemerella_anatipestifer,pato).
+enfermedadde(mycoplasma_gallisepticum,pollo).
+enfermedadde(mycoplasma_gallisepticum,pavo).
+enfermedadde(mycoplasma_synoviae,pollo).
+enfermedadde(colangiohepatitis,pollo).
+enfermedadde(gumboro,pollo).
+enfermedadde(bronquitis_infecciosa,pollo).
+enfermedadde(laringotranqueitis,pollo).
+enfermedadde(newcastle,pollo).
+enfermedadde(newcastle,pavo).
+enfermedadde(nefritis,pollo).
+enfermedadde(pems,pollo).
+enfermedadde(proventriculitis,pollo).
+
+%Aves ornamentales
+enfermedadde(clamidiosis,periquito).
+enfermedadde(clamidiosis,loro).
+enfermedadde(clamidiosis,cacatua).
+
+%Aves silvestres
+enfermedadde(espiroquetosis,paloma).
+enfermedadde(tuberculosis_aviar,paloma).
+enfermedadde(staphylococcus,cisne).
+enfermedadde(streptococcus,cisne).
+enfermedadde(botulismo,pollo).
+enfermedadde(botulismo,pato).
+enfermedadde(dermatitis_gangrenosa,pollo).
+enfermedadde(dermatitis_gangrenosa,pato).
+enfermedadde(hepatitis_vira,pollo).
+enfermedadde(hepatitis_vira,pavo).
+
+
+%enefer
+
+enfermedadde(enfermedad_marek, pollo).
+enfermedadde(enfermedad_marek, pavo).
+enfermedadde(enfermedad_marek, codorniz).
+enfermedadde(leucosis_linfoide, gallina).
+enfermedadde(leucosis_linfoide, pavo).
+enfermedadde(leucosis_linfoide, codorniz).
+enfermedadde(mielocitomatosis, gallina).
+enfermedadde(mielocitomatosis, gallina).
+enfermedadde(mielocitomatosis, codorniz).
+enfermedadde(eritroblastosis, gallina).
+enfermedadde(osteopetrosis, gallina).
+enfermedadde(adenocarcinomatosis, gallina).
+enfermedadde(adenocarcinomatosis, pollo).
+enfermedadde(leiomioma_del_mesosalpinx, gallina).
+enfermedadde(carcinoma_dermico_celulas_escamosas, pollo).
+enfermedadde(carcinoma_dermico_celulas_escamosas, gallina).
+enfermedadde(coccidiosis, pollo).
+enfermedadde(coccidiosis, pavo).
+enfermedadde(coccidiosis, pato).
+enfermedadde(coccidiosis, ganso).
+enfermedadde(histomonosis, pavo).
+enfermedadde(histomonosis, pollo).
+enfermedadde(histomonosis, gallina).
+enfermedadde(histomonosis, ganso).
+enfermedadde(tricomoniasis, paloma).
+enfermedadde(tricomoniasis, pavo).
+enfermedadde(tricomoniasis, pollo).
+enfermedadde(ascaridiosis, ave).
+enfermedadde(heterakidosis, pollo).
+enfermedadde(heterakidosis, pavo).
+enfermedadde(raillietinosis, pollo).
+enfermedadde(knemidokoptosis, gallina).
+enfermedadde(knemidokoptosis, pavo).
+enfermedadde(aspergillosis, pollo).
+enfermedadde(aspergillosis, pavo).
+enfermedadde(candidiasis, pollo).
+enfermedadde(aflatoxicosis, pollo).
+enfermedadde(fusariotoxicosis, pollo).
+enfermedadde(deficiencia_vitamina_a, pollo).
+enfermedadde(deficiencia_vitamina_a, pavo).
+enfermedadde(deficiencia_vitamina_b1, pollo).
+enfermedadde(deficiencia_vitamina_b1, pavo).
+enfermedadde(deficiencia_vitamina_b2, pollo).
+enfermedadde(deficiencia_vitamina_b2, pavo).
+enfermedadde(deficiencia_vitamina_e, pollo).
+enfermedadde(deficiencia_vitamina_e, pavo).
+enfermedadde(deficiencia_vitamina_e, pato).
+enfermedadde(sindrome_higado_graso_hemorragico, gallina).
+enfermedadde(raquitismo, pollo).
+enfermedadde(raquitismo, pavo).
+enfermedadde(raquitismo, gallina).
+
+
