@@ -8,7 +8,6 @@
  resource(portada, image, image('img_principal.jpg')).
 
 
-%Tipo Enfermedad
 tipo_de_enfermedad(bacteriana).
 tipo_de_enfermedad(virales).
 tipo_de_enfermedad(neoplasicas).
@@ -18,7 +17,7 @@ tipo_de_enfermedad(micotoxicosis).
 tipo_de_enfermedad(carenciales).
 tipo_de_enfermedad(otros).
 
-%aves
+
 ave(pollo).
 ave(paloma).
 ave(pato).
@@ -33,7 +32,7 @@ ave(cisne).
 ave(tucan).
 ave(loro).
 
-%tipo ave
+
 aveesde(pollo,corral).
 aveesde(paloma,corral).
 aveesde(pavo,corral).
@@ -52,9 +51,6 @@ aveesde(cisne,ornamental).
 aveesde(tucan,ornamental).
 aveesde(loro,ornamental).
 
-
-
-%sintomas
 
 sintomade(diarrea,escherichia_coli).
 sintomade(deshidratacion,escherichia_coli).
@@ -191,7 +187,7 @@ sintomade(ictericia,hepatitis_esplenomegalia).
 sintomade(depresion,hepatitis_esplenomegalia).
 sintomade(plumas_erizadas,hepatitis_esplenomegalia).
 
-%otros
+
 sintomade(muerte_subita,sindrome_de_mortalidad_por_pico_de_hipoglicemia).
 sintomade(convulsiones,sindrome_de_mortalidad_por_pico_de_hipoglicemia).
 sintomade(enanismo,sindrome_de_mortalidad_por_pico_de_hipoglicemia).
@@ -267,7 +263,7 @@ sintomade(piel_amarillenta,intoxicacion_selenio).
 sintomade(muerte_subita,intoxicacion_selenio).
 
 
-%kevin
+
 sintomade(lesiones_linfomatosas, marek_agudas).
 sintomade(ovarios_coliflor, marek_agudas).
 sintomade(asimetria_testiculos, marek_agudas).
@@ -396,7 +392,6 @@ sintomade(crecimiento_reducido, raquitismo).
 
 
 
-% Enfermedad
 enfermedadde(enteritis_ulcerativa,codorniz).
 enfermedadde(gastritis_necrotica,pavo).
 enfermedadde(gastritis_necrotica,pollo).
@@ -417,12 +412,12 @@ enfermedadde(nefritis,pollo).
 enfermedadde(pems,pollo).
 enfermedadde(proventriculitis,pollo).
 
-%Aves ornamentales
+
 enfermedadde(clamidiosis,periquito).
 enfermedadde(clamidiosis,loro).
 enfermedadde(clamidiosis,cacatua).
 
-%Aves silvestres
+
 enfermedadde(espiroquetosis,paloma).
 enfermedadde(tuberculosis_aviar,paloma).
 enfermedadde(staphylococcus,cisne).
@@ -435,7 +430,6 @@ enfermedadde(hepatitis_vira,pollo).
 enfermedadde(hepatitis_vira,pavo).
 
 
-%enefer
 
 enfermedadde(enfermedad_marek, pollo).
 enfermedadde(enfermedad_marek, pavo).
@@ -774,11 +768,11 @@ mostrar_imagen_tratamiento(Imagen) :-
     send(Ventana, open_centered).
 
 
-% Lista de síntomas de una enfermedad
+
 sintomas(Enfermedad, Sintomas) :-
     findall(Sintoma, sintomade(Sintoma, Enfermedad), Sintomas).
 
-% Calcular el porcentaje de coincidencia
+
 porcentaje_coincidencia(Enfermedad, SintomasReportados, Porcentaje) :-
     sintomas(Enfermedad, SintomasEnfermedad),
     intersection(SintomasReportados, SintomasEnfermedad, SintomasCoincidentes),
@@ -787,7 +781,7 @@ porcentaje_coincidencia(Enfermedad, SintomasReportados, Porcentaje) :-
     length(SintomasEnfermedad, TotalSintomasEnfermedad),
     Porcentaje is (NumCoincidentes / TotalSintomasReportados) * (TotalSintomasReportados / TotalSintomasEnfermedad) * 100.
 
-% Mostrar el porcentaje de coincidencia para cada enfermedad
+
 mostrar_porcentajes(SintomasReportados) :-
     setof(Enfermedad, Sintoma^sintomade(Sintoma, Enfermedad), Enfermedades),
     sumar_porcentajes(Enfermedades, SintomasReportados, 0, Suma),
